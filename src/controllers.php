@@ -18,7 +18,7 @@ $app->get('/collect', function(Request $request) use ($app) {
     $response = new JsonResponse();
     $ua = $request->query->get('cid');
     $v = $request->get('v');
-    $app['monolog']->addInfo(sprintf('Received collect info from CID "%s" using VERSION "%s" and IP "%s"', ($ua, $v, $request->getClientIp()));
+    $app['monolog']->addInfo(sprintf('Received collect info from CID "%s" using VERSION "%s" and IP "%s"', $ua, $v, $request->getClientIp()));
     return $response;
 })
 ->bind('collect');
