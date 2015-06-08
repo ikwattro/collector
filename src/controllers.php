@@ -23,9 +23,11 @@ $app->get('/collect', function(Request $request) use ($app) {
     $ua = $request->query->get('cid');
     $v = $request->get('v');
     $client = $app['sqs'];
+    $dt = new \DateTime("NOW");
+    $t = $dt->getTimestamp() * 1000;
     $client->sendMessage(array(
         'QueueUrl' => $config['queue']['url'],
-        'MessageBody' => $ua . '|' . $v . '|' . $request->getClientIp(),
+        'MessageBody' => $ua . '|' . $v . '|' . $request->getClientIp() . '|' . $t,
     ));
     $app['monolog']->addInfo(sprintf('Received collect info from CID "%s" using VERSION "%s" and IP "%s"', $ua, $v, $request->getClientIp()));
     return $response;
