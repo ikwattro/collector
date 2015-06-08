@@ -23,7 +23,9 @@
         "symfony/validator": "~2.6",
         "monolog/monolog": "^1.13",
         "aws/aws-sdk-php": "^3.0",
-        "symfony/yaml": "^2.7"
+        "symfony/yaml": "^2.7",
+        "willdurand/geocoder": "~2.0",
+        "guzzle/guzzle": "^3.9"
     },
     "autoload": {
         "psr-0": { "": "src/" }
