@@ -5,6 +5,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Yaml\Parser;
 
 //Request::setTrustedProxies(array('127.0.0.1'));
 
@@ -15,9 +16,17 @@ $app->get('/', function () use ($app) {
 ;
 
 $app->get('/collect', function(Request $request) use ($app) {
+    $awsConfig = file_get_contents(__DIR__.'/../config/aws.yml');
+    $yaml = new Parser();
+    $config = $yaml->parse($awsConfig);
     $response = new JsonResponse();
     $ua = $request->query->get('cid');
     $v = $request->get('v');
+    $client = $app['sqs'];
+    $client->sendMessage(array(
+        'QueueUrl' => $config['queue']['url'],
+        'MessageBody' => 'hello from silex with IP "' . $request->getClientIp() . '"'
+    ));
     $app['monolog']->addInfo(sprintf('Received collect info from CID "%s" using VERSION "%s" and IP "%s"', $ua, $v, $request->getClientIp()));
     return $response;
 })
