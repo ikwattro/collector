@@ -21,7 +21,9 @@
         "symfony/translation": "~2.6",
         "symfony/twig-bridge": "~2.6",
         "symfony/validator": "~2.6",
-        "monolog/monolog": "^1.13"
+        "monolog/monolog": "^1.13",
+        "aws/aws-sdk-php": "^3.0",
+        "symfony/yaml": "^2.7"
     },
     "autoload": {
         "psr-0": { "": "src/" }
