@@ -25,7 +25,7 @@ $app->get('/collect', function(Request $request) use ($app) {
     $client = $app['sqs'];
     $client->sendMessage(array(
         'QueueUrl' => $config['queue']['url'],
-        'MessageBody' => 'hello from silex with IP "' . $request->getClientIp() . '"'
+        'MessageBody' => $ua . '|' . $v . '|' . $request->getClientIp(),
     ));
     $app['monolog']->addInfo(sprintf('Received collect info from CID "%s" using VERSION "%s" and IP "%s"', $ua, $v, $request->getClientIp()));
     return $response;
